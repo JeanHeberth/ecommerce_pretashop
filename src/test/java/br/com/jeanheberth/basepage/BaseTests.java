@@ -15,19 +15,21 @@ public class BaseTests {
 
     @BeforeAll
     public static void inicializa() {
-        System.setProperty("webdriver.chrome.driver", "D:\\Documentos\\Tudo refente a testes de software\\Desenvolvimentos TestesAutomatizados\\DriversTestes\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\Documentos\\Automacao\\DesenvolvimentosTestesAutomatizados\\DriversTestes\\98\\chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @BeforeEach
     public void carregarPaginaInicial() {
         driver.get("https://marcelodebittencourt.com/demoprestashop");
         homePage = new HomePage(driver);
+
     }
 
     @AfterAll
     public static void finaliza() {
-        driver.quit();
+       driver.quit();
     }
 
 
