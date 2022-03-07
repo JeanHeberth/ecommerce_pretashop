@@ -1,8 +1,10 @@
-package br.com.jeanheberth.pages;
+package br.com.jeanheberth.basepage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import static br.com.jeanheberth.core.DriveFactory.getDriver;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class HomePage {
     private By textoProdutosNoCarrinho = By.className("cart-products-count");
     private By botaoSignIn = By.cssSelector("#_desktop_user_info span.hidden-sm-down");
     private By userLogado = By.cssSelector("#_desktop_user_info span.hidden-sm-down");
+    private By botaoMyStore = By.id("_desktop_logo");
 
 
     public HomePage(WebDriver driver) {
@@ -31,11 +34,11 @@ public class HomePage {
     }
 
     private void carregarListaProdutos() {
-        listaProdutos = driver.findElements(produtos);
+        listaProdutos =   getDriver().findElements(produtos);
     }
 
     public int obterQuantidadeProdutosNoCarrinho() {
-        String quantidadeProdutosNoCarrinho = driver.findElement(textoProdutosNoCarrinho).getText();
+        String quantidadeProdutosNoCarrinho = getDriver().findElement(textoProdutosNoCarrinho).getText();
         quantidadeProdutosNoCarrinho = quantidadeProdutosNoCarrinho.replace("(", "");
         quantidadeProdutosNoCarrinho = quantidadeProdutosNoCarrinho.replace(")", "");
 
@@ -45,25 +48,30 @@ public class HomePage {
     }
 
     public String obterNomeProduto(int indice) {
-        return driver.findElements(descricoesDosProdutos).get(indice).getText();
+        return getDriver().findElements(descricoesDosProdutos).get(indice).getText();
     }
 
     public String obterPrecoProduto(int indice) {
-        return driver.findElements(precoDosProdutos).get(indice).getText();
+        return getDriver().findElements(precoDosProdutos).get(indice).getText();
 
     }
 
     public ProdutoPage clicarProduto(int indice) {
-        driver.findElements(descricoesDosProdutos).get(indice).click();
-        return new ProdutoPage(driver);
+        getDriver().findElements(descricoesDosProdutos).get(indice).click();
+        return new ProdutoPage(getDriver());
     }
 
     public LoginPage clicarBotaoSignIn(){
-        driver.findElement(botaoSignIn).click();
-        return new LoginPage(driver);
+        getDriver().findElement(botaoSignIn).click();
+        return new LoginPage(getDriver());
     }
 
     public boolean validarUsuarioLogado(String texto){
-       return texto.contentEquals(driver.findElement(userLogado).getText()) ;
+       return texto.contentEquals(getDriver().findElement(userLogado).getText()) ;
+    }
+
+    public void clicarNoBotaoMystore(){
+        getDriver().findElement(botaoMyStore).click();
+
     }
 }

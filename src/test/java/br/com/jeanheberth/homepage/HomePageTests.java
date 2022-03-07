@@ -1,15 +1,16 @@
 package br.com.jeanheberth.homepage;
 
-import br.com.jeanheberth.basepage.BaseTests;
-import br.com.jeanheberth.pages.LoginPage;
-import br.com.jeanheberth.pages.ProdutoPage;
+import br.com.jeanheberth.core.BaseTests;
+import br.com.jeanheberth.basepage.LoginPage;
+import br.com.jeanheberth.basepage.ModalProdutoPages;
+import br.com.jeanheberth.basepage.ProdutoPage;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomePageTests extends BaseTests {
 
@@ -22,7 +23,7 @@ public class HomePageTests extends BaseTests {
     @Test
     public void testValidarCarrinhoZerado() {
         int produtosNoCarrinho = homePage.obterQuantidadeProdutosNoCarrinho();
-        // System.out.println("Quantidades: " +produtosNoCarrinho);
+        // System.out.println("Quantidades: " + produtosNoCarrinho);
         assertThat(produtosNoCarrinho, is(0));
     }
 
@@ -40,8 +41,8 @@ public class HomePageTests extends BaseTests {
         String precoProduto_ProdtuoPage = produtoPage.obterPrecoProduto();
 
 
-        System.out.println(nomeProduto_HomePage);
-        System.out.println(nomeProduto_ProdutoPage);
+        // System.out.println(nomeProduto_HomePage);
+        //  System.out.println(nomeProduto_ProdutoPage);
         assertThat(nomeProduto_HomePage.toUpperCase(), is(nomeProduto_ProdutoPage.toUpperCase()));
         assertThat(precoProduto_HomePage, is(precoProduto_ProdtuoPage));
 
@@ -65,11 +66,17 @@ public class HomePageTests extends BaseTests {
         assertThat(homePage.validarUsuarioLogado("Jean Heberth Souza Vieira"), is(true));
 
         //Acessar a pagina inicial
-        carregarPaginaInicial();
+       homePage.clicarNoBotaoMystore();
     }
 
     @Test
     public void incluirProdutoNoCarrinho_ProdutoIncluidoComSucesso() {
+
+        String tamanhoProduto = "M";
+        String corProduto = "Black";
+        Integer quantidadeProduto = 15000;
+
+
         //Pre condicao
         //usuario logado
         if (!homePage.validarUsuarioLogado("Jean Heberth Souza Vieira")) {
@@ -80,25 +87,29 @@ public class HomePageTests extends BaseTests {
 
         //Selecionar Tamanho
         List<String> listaOpcoes = produtoPage.obterOpcoesSelecionadas();
-        System.out.println(listaOpcoes.get(0));
-        System.out.println("Tamanho da lista: " + listaOpcoes.size());
+        // System.out.println(listaOpcoes.get(0));
+        //  System.out.println("Tamanho da lista: " + listaOpcoes.size());
 
-        produtoPage.selecionarOpcaoDropDown("M");
+        produtoPage.selecionarOpcaoDropDown(tamanhoProduto);
 
         listaOpcoes = produtoPage.obterOpcoesSelecionadas();
-        System.out.println(listaOpcoes.get(0));
-        System.out.println("Tamanho da lista: " + listaOpcoes.size());
+        // System.out.println(listaOpcoes.get(0));
+        //  System.out.println("Tamanho da lista: " + listaOpcoes.size());
 
         //Selecionar Cor
         produtoPage.selecionarCorDoProduto();
 
         //Selecionar Quantidade
-        produtoPage.alterarQuantidadeDoProduto(105);
+        produtoPage.alterarQuantidadeDoProduto(quantidadeProduto);
 
         //Adicionar no Carrinho
-        produtoPage.adicionarProdutoNoCarrinho();
+        ModalProdutoPages modalProdutoPages = produtoPage.adicionarProdutoNoCarrinho();
 
+        //Validações
+        assertTrue(modalProdutoPages.mensagemDeInseridoComSucesso().endsWith("Product successfully added to your shopping cart"));
+        assertThat(modalProdutoPages.obterTamanhoProduto(), is(tamanhoProduto));
+        assertThat(modalProdutoPages.obterCorProduto(), is(corProduto));
+        assertThat(modalProdutoPages.obterQuantidadeProduto(), is(Integer.toString(quantidadeProduto)));
 
     }
-
 }

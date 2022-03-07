@@ -1,4 +1,4 @@
-package br.com.jeanheberth.pages;
+package br.com.jeanheberth.basepage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static br.com.jeanheberth.core.DriveFactory.getDriver;
 
 public class ProdutoPage {
 
@@ -24,11 +26,11 @@ public class ProdutoPage {
     }
 
     public String obterNomeProduto() {
-        return driver.findElement(nomeProduto).getText();
+        return getDriver().findElement(nomeProduto).getText();
     }
 
     public String obterPrecoProduto() {
-        return driver.findElement(precoProduto).getText();
+        return getDriver().findElement(precoProduto).getText();
     }
 
     public void selecionarOpcaoDropDown(String opcao) {
@@ -46,7 +48,7 @@ public class ProdutoPage {
     }
 
     public Select encontarDropDownSize() {
-        return new Select(driver.findElement(tamanhoProduto));
+        return new Select(getDriver().findElement(tamanhoProduto));
     }
 
     public void selecionarCorDoProduto() {
@@ -54,11 +56,12 @@ public class ProdutoPage {
     }
 
     public void alterarQuantidadeDoProduto(int quantidade) {
-        driver.findElement(quantidadeDoProduto).clear();
-        driver.findElement(quantidadeDoProduto).sendKeys(Integer.toString(quantidade));
+        getDriver().findElement(quantidadeDoProduto).clear();
+        getDriver().findElement(quantidadeDoProduto).sendKeys(Integer.toString(quantidade));
     }
 
-    public void adicionarProdutoNoCarrinho() {
-        driver.findElement(clicarBotaoAdiconarNoCarrinho).click();
+    public ModalProdutoPages adicionarProdutoNoCarrinho() {
+        getDriver().findElement(clicarBotaoAdiconarNoCarrinho).click();
+        return new ModalProdutoPages(getDriver());
     }
 }

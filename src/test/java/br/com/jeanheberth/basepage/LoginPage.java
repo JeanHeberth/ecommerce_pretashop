@@ -1,7 +1,10 @@
-package br.com.jeanheberth.pages;
+package br.com.jeanheberth.basepage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import static br.com.jeanheberth.core.DriveFactory.getDriver;
+
+
 
 public class LoginPage {
 
@@ -16,15 +19,15 @@ public class LoginPage {
     }
 
     public void preencherEmail(String texto) {
-        driver.findElement(email).sendKeys(texto);
+        getDriver().findElement(email).sendKeys(texto);
     }
 
     public void preencherPassword(String texto) {
-        driver.findElement(password).sendKeys(texto);
+        getDriver().findElement(password).sendKeys(texto);
     }
 
     public void clicarBotaoSignIn() {
-        driver.findElement(botaSignIn).click();
+        getDriver().findElement(botaSignIn).click();
     }
 
 
