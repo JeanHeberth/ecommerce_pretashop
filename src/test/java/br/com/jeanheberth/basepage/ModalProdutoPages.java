@@ -18,6 +18,8 @@ public class ModalProdutoPages {
     private By descricaoProduto = By.className("product-name");
     private By precoProduto = By.cssSelector("div.modal-body p.product-price");
     private By listaTamanhoProdutos = By.cssSelector("div.divide-right .col-md-6:nth-child(2) span strong");
+    private By subTotal = By.cssSelector(".cart-content p:nth-child(2) span.value");
+    private By botaoProceedToCheckout = By.cssSelector("div .cart-content-btn a.btn-primary");
 
     public ModalProdutoPages(WebDriver driver) {
         this.driver = driver;
@@ -29,6 +31,14 @@ public class ModalProdutoPages {
                 .ignoring(NoSuchElementException.class);
         wait.until(ExpectedConditions.visibilityOfElementLocated(mensagemProdutoAdicionadoComSucesso));
         return getDriver().findElement(mensagemProdutoAdicionadoComSucesso).getText();
+    }
+
+    public String obterDescricaoProduto() {
+        return getDriver().findElement(descricaoProduto).getText();
+    }
+
+    public String obterPrecoProduto() {
+        return getDriver().findElement(precoProduto).getText();
     }
 
     public String obterTamanhoProduto() {
@@ -43,5 +53,13 @@ public class ModalProdutoPages {
         return getDriver().findElements(listaTamanhoProdutos).get(2).getText();
     }
 
+    public String obterSubtotal() {
+        return getDriver().findElement(subTotal).getText();
+    }
+
+    public CarrinhoPage clicarBotaoProceedToCheckout(){
+         getDriver().findElement(botaoProceedToCheckout).click();
+         return new CarrinhoPage(getDriver());
+    }
 
 }

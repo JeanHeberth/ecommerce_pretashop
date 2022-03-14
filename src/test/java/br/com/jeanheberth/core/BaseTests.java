@@ -11,8 +11,8 @@ import static br.com.jeanheberth.core.DriveFactory.killDriver;
 
 public class BaseTests {
 
-    private static WebDriverManager driverManager;
-    private static WebDriver driver;
+  //  private static WebDriverManager driverManager;
+  //  private static WebDriver driver;
     protected HomePage homePage;
 
 
@@ -25,7 +25,7 @@ public class BaseTests {
 
     @AfterAll
     public static void finaliza() {
-      //  killDriver();
+        killDriver();
     }
 
 
