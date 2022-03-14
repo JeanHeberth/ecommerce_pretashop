@@ -219,7 +219,6 @@ public class HomePageTests extends BaseTests {
         assertEquals(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxaInclTotalProduto()), is(obter_totalTaxaInclTotalProduto));
         assertEquals(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxasProduto()), is(obter_totalTaxasProduto));
 */
-String tst = "4564564";
         // assertThat(carrinhoPage.MensagemShoopingCart(),is("SHOPPING CART"));
 
     }
