@@ -259,7 +259,8 @@ public class HomePageTests extends BaseTests {
         assertThat(encontrado_amountPayByCheck_Double, is(obter_totalTaxaInclTotalProduto));
 
         //CLicar no I agree to the terms
-        chekoutPage.clicarNoBotaoiAgreToTerms();
+        chekoutPage.selecionarIAgreToTerms();
+        assertTrue(chekoutPage.estaSelecionadoIAgreToTerms());
 
         //Clicar no botao ORDER WITH
         chekoutPage.clicarNoBotaobotaoOrderWith();

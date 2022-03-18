@@ -49,8 +49,12 @@ public class ChekoutPage {
         getDriver().findElement(payByCheck).click();
     }
 
-    public void clicarNoBotaoiAgreToTerms() {
+    public void selecionarIAgreToTerms() {
         getDriver().findElement(iAgreToTerms).click();
+    }
+
+    public boolean estaSelecionadoIAgreToTerms() {
+       return getDriver().findElement(iAgreToTerms).isSelected();
     }
 
     public void clicarNoBotaobotaoOrderWith() {
