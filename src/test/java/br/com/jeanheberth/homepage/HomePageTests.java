@@ -1,10 +1,7 @@
 package br.com.jeanheberth.homepage;
 
-import br.com.jeanheberth.basepage.CarrinhoPage;
+import br.com.jeanheberth.basepage.*;
 import br.com.jeanheberth.core.BaseTests;
-import br.com.jeanheberth.basepage.LoginPage;
-import br.com.jeanheberth.basepage.ModalProdutoPages;
-import br.com.jeanheberth.basepage.ProdutoPage;
 import br.com.jeanheberth.util.Funcoes;
 import org.junit.jupiter.api.Test;
 
@@ -73,7 +70,7 @@ public class HomePageTests extends BaseTests {
         homePage.clicarNoBotaoMystore();
     }
 
-    ModalProdutoPages modalProdutoPages;
+    ModalProdutoPage modalProdutoPages;
 
     @Test
     public void incluirProdutoNoCarrinho_ProdutoIncluidoComSucesso() {
@@ -142,7 +139,7 @@ public class HomePageTests extends BaseTests {
     Double obter_precoProduto = 19.12;
     String obter_tamanhoProduto = "M";
     String obter_corProduto = "Black";
-    int    obter_quantidadeProduto = 15;
+    int obter_quantidadeProduto = 15;
     Double obter_subTotalProduto = obter_precoProduto * obter_quantidadeProduto;
 
     int obter_numeroItens = obter_quantidadeProduto;
@@ -151,7 +148,9 @@ public class HomePageTests extends BaseTests {
     Double obter_totalTaxaExclTotalProduto = obter_shippingTotalProduto + obter_subTotalTotalProduto;
     Double obter_totalTaxaInclTotalProduto = obter_totalTaxaExclTotalProduto;
     Double obter_totalTaxasProduto = 0.00;
+    String esperado_nomeCliente = "Jean Heberth Souza Vieira";
 
+    CarrinhoPage carrinhoPage;
 
     @Test
     public void IrParaCarrinho_InformacoesPersisitidas() {
@@ -160,7 +159,7 @@ public class HomePageTests extends BaseTests {
         //Produto incluído na tela modalPage
         incluirProdutoNoCarrinho_ProdutoIncluidoComSucesso();
 
-        CarrinhoPage carrinhoPage = modalProdutoPages.clicarBotaoProceedToCheckout();
+        carrinhoPage = modalProdutoPages.clicarBotaoProceedToCheckout();
 
         // Validar todos elementos da Tela
 
@@ -176,10 +175,10 @@ public class HomePageTests extends BaseTests {
 
         System.out.println("**** ITENS TOTAIS ******");
         //Aqui acontece mudança
-        System.out.println("Número total de produtos: " +Funcoes.removeTextoItemsDevolveInt(carrinhoPage.obter_numeroItens()));
+        System.out.println("Número total de produtos: " + Funcoes.removeTextoItemsDevolveInt(carrinhoPage.obter_numeroItens()));
         System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_subTotalTotalProduto()));
         System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_shippingTotalProduto()));
-        System.out.println("Taxa Excluídas: " +Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxaExclTotalProduto()));
+        System.out.println("Taxa Excluídas: " + Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxaExclTotalProduto()));
         System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxaInclTotalProduto()));
         System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxasProduto()));
 
@@ -220,6 +219,51 @@ public class HomePageTests extends BaseTests {
         assertEquals(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxasProduto()), is(obter_totalTaxasProduto));
 */
         // assertThat(carrinhoPage.MensagemShoopingCart(),is("SHOPPING CART"));
-
     }
+
+    ChekoutPage chekoutPage;
+
+    @Test
+    public void IrParaCheckout_FreteMeioPagamentoEnderecoListadosOk() {
+        //Pre-Condicoes
+        //Produto disponivel no carrinho de compras
+        IrParaCarrinho_InformacoesPersisitidas();
+
+
+        // Teste
+        //Clicar no botao  Proceed Checkout
+        chekoutPage = carrinhoPage.clicarNoBotaoProceedCheckout();
+
+        // Preencher informacoes
+
+
+        // Validar informacoes na tela.
+        assertThat(Funcoes.removeCifraoDevolveDouble(chekoutPage.obter_totalTaxaInclTotalProduto()), is(obter_totalTaxaInclTotalProduto));
+        assertTrue(chekoutPage.obter_nomeCliente().startsWith(esperado_nomeCliente));
+        chekoutPage.clicarNoBotaoContinueAdrress();
+
+
+        String encontrado_shippingValor = chekoutPage.obter_shippingValor();
+        encontrado_shippingValor = Funcoes.removeTexto(encontrado_shippingValor, " tax excl.");
+        Double encontrado_shippingValorDouble = Funcoes.removeCifraoDevolveDouble(encontrado_shippingValor);
+        assertThat(encontrado_shippingValorDouble, is(obter_shippingTotalProduto));
+        chekoutPage.clicarNoBotaoContinueShipping();
+
+        //Clicar no input paybyCheck
+        chekoutPage.selecionarRadiopayByCheck();
+
+        //Validação
+        String encontrado_amountPayByCheck = chekoutPage.obter_mensagem_amountPayByCheck();
+        encontrado_amountPayByCheck = Funcoes.removeTexto(encontrado_amountPayByCheck, " (tax incl.)");
+        Double encontrado_amountPayByCheck_Double = Funcoes.removeCifraoDevolveDouble(encontrado_amountPayByCheck);
+        assertThat(encontrado_amountPayByCheck_Double, is(obter_totalTaxaInclTotalProduto));
+
+        //CLicar no I agree to the terms
+        chekoutPage.clicarNoBotaoiAgreToTerms();
+
+        //Clicar no botao ORDER WITH
+        chekoutPage.clicarNoBotaobotaoOrderWith();
+    }
+
+
 }

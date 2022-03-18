@@ -10,7 +10,7 @@ import java.time.Duration;
 
 import static br.com.jeanheberth.core.DriveFactory.getDriver;
 
-public class ModalProdutoPages {
+public class ModalProdutoPage {
 
     private WebDriver driver;
 
@@ -21,7 +21,7 @@ public class ModalProdutoPages {
     private By subTotal = By.cssSelector(".cart-content p:nth-child(2) span.value");
     private By botaoProceedToCheckout = By.cssSelector("div .cart-content-btn a.btn-primary");
 
-    public ModalProdutoPages(WebDriver driver) {
+    public ModalProdutoPage(WebDriver driver) {
         this.driver = driver;
     }
 

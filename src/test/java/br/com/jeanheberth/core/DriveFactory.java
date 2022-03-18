@@ -43,7 +43,7 @@ public class DriveFactory {
             }
             driver.get("https://marcelodebittencourt.com/demoprestashop");
             driver.manage().deleteAllCookies();
-            driver.manage().window().maximize();
+           // driver.manage().window().maximize();
 
         }
 

@@ -60,8 +60,8 @@ public class ProdutoPage {
         getDriver().findElement(quantidadeDoProduto).sendKeys(Integer.toString(quantidade));
     }
 
-    public ModalProdutoPages adicionarProdutoNoCarrinho() {
+    public ModalProdutoPage adicionarProdutoNoCarrinho() {
         getDriver().findElement(clicarBotaoAdiconarNoCarrinho).click();
-        return new ModalProdutoPages(getDriver());
+        return new ModalProdutoPage(getDriver());
     }
 }
