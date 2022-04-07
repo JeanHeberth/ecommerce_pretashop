@@ -1,0 +1,3 @@
+﻿nomeTeste;email;password;resultado
+loginValido;jeanheberth19@gmail.com;Teste123@#;positivo
+loginInvalido;jeanheberth19@gmail.com;Teste1234;negativo

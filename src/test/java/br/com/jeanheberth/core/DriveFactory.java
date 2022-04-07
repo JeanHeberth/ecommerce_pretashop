@@ -7,8 +7,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-import static br.com.jeanheberth.core.DriveFactory.getDriver;
-
 
 public class DriveFactory {
 
@@ -40,10 +38,12 @@ public class DriveFactory {
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
                     break;
+
             }
-            driver.get("https://marcelodebittencourt.com/demoprestashop");
-            driver.manage().deleteAllCookies();
-           // driver.manage().window().maximize();
+            driver.manage().window().maximize();
+            driver.get("https://marcelodebittencourt.com/demoprestashop/");
+            /*driver.manage().deleteAllCookies();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);*/
 
         }
 

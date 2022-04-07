@@ -11,6 +11,5 @@ public class Propriedades {
         FIREFOX,
         IE,
         EDGE
-
     }
 }

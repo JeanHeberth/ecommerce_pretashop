@@ -9,6 +9,7 @@ public class CarrinhoPage {
 
     private WebDriver driver;
 
+    private By quantidadeDoProduto = By.className("product-quantity-spin");
     private By mensagemShoopingCart = By.cssSelector(".card-block .h1");
     private By nomeDoProduto = By.cssSelector(".product-line-info a");
     private By precoDoProduto = By.cssSelector("span.price");
@@ -48,6 +49,10 @@ public class CarrinhoPage {
         return getDriver().findElement(input_quantidadeDoProduto).getAttribute("value");
     }
 
+    public String obter_quantidadeProdutoCarrinho() {
+        return getDriver().findElement(input_quantidadeDoProduto).getAttribute("value");
+    }
+
     public String obter_subTotalProduto() {
         return getDriver().findElement(subTotalDoProduto).getText();
     }
@@ -84,4 +89,12 @@ public class CarrinhoPage {
         getDriver().findElement(botaoProceedToCheckout).click();
         return new ChekoutPage(getDriver());
     }
+
+    public void alterarQuantidadeDoProduto(int quantidade) {
+        getDriver().findElement(quantidadeDoProduto).clear();
+        getDriver().findElement(quantidadeDoProduto).sendKeys(Integer.toString(quantidade));
+
+    }
+
+
 }

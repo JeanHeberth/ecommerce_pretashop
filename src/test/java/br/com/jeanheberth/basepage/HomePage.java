@@ -3,11 +3,11 @@ package br.com.jeanheberth.basepage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import static br.com.jeanheberth.core.DriveFactory.getDriver;
-
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static br.com.jeanheberth.core.DriveFactory.getDriver;
 
 public class HomePage {
 
@@ -22,6 +22,7 @@ public class HomePage {
     private By botaoSignIn = By.cssSelector("#_desktop_user_info span.hidden-sm-down");
     private By userLogado = By.cssSelector("#_desktop_user_info span.hidden-sm-down");
     private By botaoMyStore = By.id("_desktop_logo");
+    private By botaoSignOut = By.cssSelector("a.logout");
 
 
     public HomePage(WebDriver driver) {
@@ -34,7 +35,7 @@ public class HomePage {
     }
 
     private void carregarListaProdutos() {
-        listaProdutos =   getDriver().findElements(produtos);
+        listaProdutos = getDriver().findElements(produtos);
     }
 
     public int obterQuantidadeProdutosNoCarrinho() {
@@ -61,17 +62,21 @@ public class HomePage {
         return new ProdutoPage(getDriver());
     }
 
-    public LoginPage clicarBotaoSignIn(){
+    public LoginPage clicarBotaoSignIn() {
         getDriver().findElement(botaoSignIn).click();
         return new LoginPage(getDriver());
     }
 
-    public boolean validarUsuarioLogado(String texto){
-       return texto.contentEquals(getDriver().findElement(userLogado).getText()) ;
+    public boolean validarUsuarioLogado(String texto) {
+        return texto.contentEquals(getDriver().findElement(userLogado).getText());
     }
 
-    public void clicarNoBotaoMystore(){
+    public void clicarNoBotaoMystore() {
         getDriver().findElement(botaoMyStore).click();
 
+    }
+
+    public void clicarBotaoSignOut() {
+        getDriver().findElement(botaoSignOut).click();
     }
 }

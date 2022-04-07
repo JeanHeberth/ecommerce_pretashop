@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomePageTests extends BaseTests {
@@ -36,7 +35,7 @@ public class HomePageTests extends BaseTests {
         String nomeProduto_HomePage = homePage.obterNomeProduto(indice);
         String precoProduto_HomePage = homePage.obterPrecoProduto(indice);
 
-        produtoPage = homePage.clicarProduto(indice);
+        produtoPage = homePage.clicarProduto(0);
 
         nomeProduto_ProdutoPage = produtoPage.obterNomeProduto();
         String precoProduto_ProdtuoPage = produtoPage.obterPrecoProduto();
@@ -68,7 +67,9 @@ public class HomePageTests extends BaseTests {
 
         //Acessar a pagina inicial
         homePage.clicarNoBotaoMystore();
+       // carregarPaginaInicial();
     }
+
 
     ModalProdutoPage modalProdutoPages;
 
@@ -262,9 +263,14 @@ public class HomePageTests extends BaseTests {
         chekoutPage.selecionarIAgreToTerms();
         assertTrue(chekoutPage.estaSelecionadoIAgreToTerms());
 
-        //Clicar no botao ORDER WITH
-        chekoutPage.clicarNoBotaobotaoOrderWith();
+
     }
 
 
+//Corrigir o errro do AssertThat
+    //Iniciar a aula 22
+
+
 }
+
+

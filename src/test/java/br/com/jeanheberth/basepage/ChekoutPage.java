@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 import static br.com.jeanheberth.core.DriveFactory.getDriver;
 
+
 public class ChekoutPage {
 
     private WebDriver driver;
@@ -16,8 +17,9 @@ public class ChekoutPage {
     private By botaContinue = By.name("confirmDeliveryOption");
     private By payByCheck = By.id("payment-option-1");
     private By iAgreToTerms = By.id("conditions_to_approve[terms-and-conditions]");
-    private By botaoOrderWith = By.id("payment-confirmation");
+    private By botaoOrderWith = By.cssSelector("#payment-confirmation button");
     private By amountPayByCheck = By.cssSelector("#payment-option-1-additional-information > section > dl > dd:nth-child(2)");
+
 
 
     public ChekoutPage(WebDriver driver) {
@@ -57,12 +59,15 @@ public class ChekoutPage {
        return getDriver().findElement(iAgreToTerms).isSelected();
     }
 
-    public void clicarNoBotaobotaoOrderWith() {
+    public PedidoPage clicarNoBotaobotaoOrderWith() {
         getDriver().findElement(botaoOrderWith).click();
+        return new PedidoPage(getDriver());
     }
 
     public String obter_mensagem_amountPayByCheck() {
         return getDriver().findElement(amountPayByCheck).getText();
 
     }
+
+
 }
